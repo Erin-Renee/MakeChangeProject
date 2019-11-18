@@ -1,6 +1,8 @@
 import java.util.Scanner;
 
 public class CashRegister {
+	static int makeChange;
+	int changeDue;
 
 	public static void main(String[] args) {
 		Scanner kb = new Scanner(System.in);
@@ -10,71 +12,84 @@ public class CashRegister {
 
 		System.out.println("How much money was tendered by customer? ");
 		double tendered = kb.nextDouble();
-
-		int change = (int) ((tendered * 100) - (amnt * 100));
-		double changE = ((double) change) / 100;
-
-		int penny = 1;
-		int nickel = 5;
-		int dime = 10;
-		int quarter = 25;
-		int dollar = 100;
-		int five = 500;
-		int ten = 1000;
 		kb.close();
 
+		int changeDue = (int) (((tendered * 100) - (amnt * 100))+0.001);
+		double changE = ((double) changeDue) / 100;
+
 		if (tendered < amnt) {
-			System.out.println("Error");
+			System.out.println("ERROR; insufficient amount.");
 
-		}else if (tendered == amnt) {
+		} else if (tendered == amnt) {
 			System.out.println("Change due: $0.00. Thank you!  ");
-		} else if (tendered > amnt) {
-			System.out.println(" change due : " + changE);
 
+		}
+		if (tendered > amnt) {
+			System.out.println(" change due : $" + changE + "0");
 
-		int teN = change % ten;
-		if (ten == (change - teN)) {
-			System.out.print(" \t$10.00 ");
-		}
-		int fiVe = teN % five;
-		if (teN >= five && teN != ten) {
-			System.out.print("\t$5.00 ");
-		}
-		int dollaR = change % dollar;
-		if (five >= dollar) {
-			int d = (five - dollar) / 100;
-			System.out.print(d + "Dollars\t");
-		}
-		int quarteR = dollaR % quarter;
-		if (dollar >= quarter) {
-			int q = dollaR - quarter;
-			q = q / quarter;
-			System.out.print(q + "quarters\t");
-		}
-		int dimE = quarteR % dime;
-		if (quarter >= dime) {
-			int di = quarteR - dimE;
-			di = di / dime;
-			System.out.print(di + "dimes\t");
-		}
-		int nickeL = dimE % nickel;
-		if (dime >= nickel) {
-			int n = dimE - nickel;
-			n = n / nickel;
-			System.out.print(n + "nickels\t");
-		}
-		int pennY = nickeL % penny;
-		if (nickeL >= penny) {
-			int p = nickeL - pennY;
-			p = p / penny;
-			System.out.print(p + "pennies");
-		}
-
+			makeChange(changeDue);
+			
 		}
 	}
 
-	public static void Error() {
-		System.out.println("ERROR; insuffecient amount.");
-	}
+	public static int makeChange(int changeDue) {
 
+		int penny = 1;
+		int pennycount = 0;
+		int nickel = 5;
+		int nickelcount = 0;
+		int dime = 10;
+		int dimecount = 0;
+		int quarter = 25;
+		int quartercount = 0;
+		int dollar = 100;
+		int dollarcount = 0;
+		int five = 500;
+		int fivecount = 0;
+		int ten = 1000;
+		int tencount = 0;
+
+		
+		if (ten < changeDue) {
+			tencount++;
+			changeDue = changeDue - ten;
+			System.out.println(tencount + "ten dollar bills");
+			
+		}
+		if (five < changeDue) {
+			fivecount++;
+			changeDue = changeDue - five;
+			System.out.println(fivecount + " Five Dollar Bills");
+		}
+		if (dollar < changeDue) {
+			dollarcount++;
+			changeDue = changeDue - dollar;
+			System.out.println(dollarcount + " One Dollar Bills");
+		}
+		if (quarter < changeDue) {
+			quartercount++;
+			changeDue = changeDue - quarter;
+			System.out.println(quartercount + " quarters");
+		}
+		if (dime < changeDue) {
+			dimecount++;
+			changeDue = changeDue - dime;
+			System.out.println(dimecount + " dime(s)");
+		}
+		if (nickel < changeDue) {
+			nickelcount++;
+			changeDue = changeDue - nickel;
+			System.out.println(nickelcount + " nickels");
+		}
+		if (penny <= (changeDue)) {
+			pennycount++;
+			changeDue = changeDue - penny;
+			System.out.println(pennycount + " pennies ");
+		} else if (makeChange < 0) {
+			System.out.println("no change due");
+		}
+		return makeChange;
+
+	}
 }
+
