@@ -50,13 +50,13 @@ public class CashRegister {
 		int tencount = 0;
 
 		
-		if (ten < changeDue) {
+		while (ten < changeDue) {
 			tencount++;
 			changeDue = changeDue - ten;
 			System.out.println(tencount + "ten dollar bills");
 			
 		}
-		if (five < changeDue) {
+		 if (five < changeDue) {
 			fivecount++;
 			changeDue = changeDue - five;
 			System.out.println(fivecount + " Five Dollar Bills");
